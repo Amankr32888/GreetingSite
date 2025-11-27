@@ -1,0 +1,299 @@
+{% extends 'grtcard/base.html' %}
+
+{% block title %}Home - Birthday Greetings{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 4rem 2rem;
+        text-align: center;
+    }
+
+    .hero h1 {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+    }
+
+    .hero-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .hero-buttons .btn {
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 25px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .btn-primary {
+        background: white;
+        color: #667eea;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-secondary {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 2px solid white;
+    }
+
+    .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        padding: 3rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .stat-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #667eea;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+        color: #666;
+        font-size: 1.1rem;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+        color: #667eea;
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .greetings-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .greeting-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s;
+    }
+
+    .greeting-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .greeting-card-image {
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+    }
+
+    .greeting-card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .greeting-card-content {
+        padding: 1.5rem;
+    }
+
+    .greeting-card-title {
+        font-size: 1.3rem;
+        color: #667eea;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+    }
+
+    .greeting-card-text {
+        color: #666;
+        margin-bottom: 1rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .greeting-card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1rem;
+        border-top: 1px solid #e0e0e0;
+        font-size: 0.85rem;
+        color: #999;
+    }
+
+    .cta-section {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+        padding: 3rem;
+        border-radius: 20px;
+        text-align: center;
+        margin: 3rem 0;
+    }
+
+    .cta-section h2 {
+        font-size: 2rem;
+        color: #667eea;
+        margin-bottom: 1rem;
+    }
+
+    .cta-section p {
+        font-size: 1.1rem;
+        color: #666;
+        margin-bottom: 2rem;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 3rem;
+        color: #999;
+    }
+
+    .empty-state-icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+    }
+
+    @media (max-width: 768px) {
+        .hero h1 {
+            font-size: 2.5rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+        }
+
+        .stats {
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            padding: 2rem 1rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>🎂 Birthday Greetings 🎉</h1>
+    <p>Create beautiful, personalized birthday cards and share them instantly</p>
+    <div class="hero-buttons">
+        {% if user.is_authenticated %}
+            <a href="{% url 'grtcard:create_greeting' %}" class="btn btn-primary">Create Greeting</a>
+            <a href="{% url 'grtcard:dashboard' %}" class="btn btn-secondary">View My Greetings</a>
+        {% else %}
+            <a href="{% url 'grtcard:register' %}" class="btn btn-primary">Get Started</a>
+            <a href="{% url 'grtcard:login' %}" class="btn btn-secondary">Login</a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="stats">
+    <div class="stat-card">
+        <div class="stat-number">{{ total_greetings }}</div>
+        <div class="stat-label">Greetings Created</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">{{ total_users }}</div>
+        <div class="stat-label">Happy Users</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number">8</div>
+        <div class="stat-label">Beautiful Themes</div>
+    </div>
+</div>
+
+{% if greetings %}
+<div class="container">
+    <h2 class="section-title">✨ Recent Greetings</h2>
+    <div class="greetings-grid">
+        {% for greeting in greetings %}
+        <div class="greeting-card">
+            <div class="greeting-card-image">
+                {% if greeting.image %}
+                    <img src="{{ greeting.image.url }}" alt="Birthday Image">
+                {% else %}
+                    🎈
+                {% endif %}
+            </div>
+            <div class="greeting-card-content">
+                <div class="greeting-card-title">🎉 {{ greeting.recipient_name }}</div>
+                <div class="greeting-card-text">{{ greeting.message|truncatewords:15 }}</div>
+                <div class="greeting-card-footer">
+                    <span>From: {{ greeting.sender_name }}</span>
+                    <a href="{% url 'grtcard:view_greeting' greeting.unique_id %}" style="color: #667eea; font-weight: 600; text-decoration: none;">View →</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+<div class="container">
+    <div class="empty-state">
+        <div class="empty-state-icon">🎈</div>
+        <h3>No greetings yet</h3>
+        <p>Be the first to create a birthday greeting!</p>
+    </div>
+</div>
+{% endif %}
+
+<div class="container">
+    <div class="cta-section">
+        {% if user.is_authenticated %}
+            <h2>Ready to create your first greeting?</h2>
+            <p>Choose a beautiful theme and personalize your message</p>
+            <a href="{% url 'grtcard:create_greeting' %}" class="btn btn-primary" style="display: inline-block;">Create Now</a>
+        {% else %}
+            <h2>Join our community of birthday celebrators!</h2>
+            <p>Sign up now to create beautiful birthday greetings</p>
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <a href="{% url 'grtcard:register' %}" class="btn btn-primary" style="display: inline-block;">Register</a>
+                <a href="{% url 'grtcard:login' %}" class="btn btn-secondary" style="display: inline-block;">Login</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

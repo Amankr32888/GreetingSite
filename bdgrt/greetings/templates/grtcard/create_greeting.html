@@ -1,0 +1,275 @@
+{% extends 'grtcard/base.html' %}
+
+{% block title %}Create Birthday Greeting - Birthday Greetings{% endblock %}
+
+{% block extra_css %}
+
+<style> .create-greeting-container { max-width: 800px; margin: 0 auto; padding: 2rem; } .form-section { background: white; padding: 2rem; border-radius: 20px; margin-bottom: 2rem; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); } .section-title { font-size: 1.3rem; color: #667eea; margin-bottom: 1.5rem; font-weight: 600; display: flex; align-items: center; gap: 10px; } .form-group { margin-bottom: 1.5rem; } .form-group label { display: block; margin-bottom: 0.8rem; color: #333; font-weight: 600; font-size: 0.95rem; } .form-group input[type="text"], .form-group input[type="date"], .form-group textarea { width: 100%; padding: 1rem; border: 2px solid #e0e0e0; border-radius: 10px; font-family: inherit; font-size: 1rem; transition: all 0.3s; color: #333; } .form-group input[type="text"]:focus, .form-group input[type="date"]:focus, .form-group textarea:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); } .form-group textarea { resize: vertical; min-height: 120px; } .form-group input[type="file"] { padding: 0.8rem; } .file-input-wrapper { position: relative; overflow: hidden; display: inline-block; width: 100%; } .file-input-label { display: block; padding: 1rem; background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%); border: 2px dashed #667eea; border-radius: 10px; text-align: center; cursor: pointer; transition: all 0.3s; color: #667eea; font-weight: 600; } .file-input-label:hover { background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%); border-color: #764ba2; } .form-group input[type="file"] { display: none; } .file-preview { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 1rem; } .file-preview-item { position: relative; width: 100%; aspect-ratio: 1; border-radius: 10px; overflow: hidden; border: 2px solid #e0e0e0; } .file-preview-item img { width: 100%; height: 100%; object-fit: cover; } .file-preview-item .remove-btn { position: absolute; top: 5px; right: 5px; background: rgba(245, 87, 108, 0.9); color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; transition: all 0.3s; } .file-preview-item .remove-btn:hover { background: rgba(245, 87, 108, 1); } .theme-selector { margin-bottom: 2rem; } .theme-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; margin-top: 1rem; } .theme-card { position: relative; cursor: pointer; border-radius: 15px; padding: 1.5rem; text-align: center; border: 3px solid transparent; transition: all 0.3s; font-weight: 600; color: white; min-height: 140px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; } .theme-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); } .theme-card input[type="radio"] { display: none; } .theme-card input[type="radio"]:checked + .theme-label { border: 3px solid white; box-shadow: inset 0 0 0 3px rgba(0, 0, 0, 0.2); } .theme-label { position: absolute; inset: 0; border-radius: 15px; padding: 1.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; cursor: pointer; border: 3px solid transparent; transition: all 0.3s; } .theme-icon { font-size: 2rem; } .theme-name { font-size: 0.9rem; font-weight: 600; } .theme-dark { background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); } .theme-bright { background: linear-gradient(135deg, #f39c12 0%, #e74c3c 100%); } .theme-friendly { background: linear-gradient(135deg, #3498db 0%, #9b59b6 100%); } .theme-lovely { background: linear-gradient(135deg, #e91e63 0%, #ff5722 100%); } .theme-romantic { background: linear-gradient(135deg, #c2185b 0%, #d32f2f 100%); } .theme-casual { background: linear-gradient(135deg, #00bcd4 0%, #4caf50 100%); } .theme-proposing { background: linear-gradient(135deg, #ffd700 0%, #ff69b4 100%); color: #333; } .theme-proposing .theme-name { color: #333; } .theme-partner { background: linear-gradient(135deg, #9c27b0 0%, #673ab7 100%); } .form-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; } .btn-submit { padding: 1rem 2.5rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 25px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; } .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4); } .btn-reset { padding: 1rem 2.5rem; background: white; color: #667eea; border: 2px solid #667eea; border-radius: 25px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; } .btn-reset:hover { background: #667eea; color: white; } .required-field::after { content: " *"; color: #e74c3c; } .char-count { font-size: 0.85rem; color: #999; margin-top: 0.5rem; } .error-message { color: #e74c3c; font-size: 0.9rem; margin-top: 0.5rem; } .success-message { background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%); color: #0c5460; padding: 1rem; border-radius: 10px; margin-bottom: 1.5rem; } .sender-info { background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%); padding: 1rem; border-radius: 10px; border-left: 4px solid #667eea; } .sender-info p { margin: 0; color: #555; font-size: 0.95rem; } @media (max-width: 768px) { .create-greeting-container { padding: 1rem; } .form-section { padding: 1.5rem; } .theme-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); } .form-actions { flex-direction: column; } .btn-submit, .btn-reset { width: 100%; } } </style>
+{% endblock %}
+
+{% block content %}
+
+<div class="create-greeting-container"> <h1 style="text-align: center; color: #667eea; margin-bottom: 2rem;"> 🎂 Create Birthday Greeting 🎉 </h1>
+text
+{% if messages %}
+<div class="success-message">
+    {% for message in messages %}
+        {{ message }}
+    {% endfor %}
+</div>
+{% endif %}
+
+<form method="post" enctype="multipart/form-data" id="greetingForm">
+    {% csrf_token %}
+
+    <!-- Sender Information Section -->
+    <div class="form-section">
+        <div class="section-title">
+            <span>📤</span>
+            <span>From Your Profile</span>
+        </div>
+
+        <div class="sender-info">
+            <p><strong>Sender Name:</strong> {{ user.first_name }} {{ user.last_name }} ({{ user.username }})</p>
+            {% if user.email %}
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Recipient Information Section -->
+    <div class="form-section">
+        <div class="section-title">
+            <span>👤</span>
+            <span>Recipient Information</span>
+        </div>
+
+        <div class="form-group">
+            <label for="recipient_name" class="required-field">Recipient's Name</label>
+            <input type="text" 
+                   id="recipient_name" 
+                   name="recipient_name" 
+                   placeholder="Enter the birthday person's name"
+                   value="{{ form.recipient_name.value|default:'' }}"
+                   required>
+            {% if form.recipient_name.errors %}
+                <div class="error-message">{{ form.recipient_name.errors.0 }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="birthday_date" class="required-field">Birthday Date</label>
+            <input type="date" 
+                   id="birthday_date" 
+                   name="birthday_date"
+                   value="{{ form.birthday_date.value|default:'' }}"
+                   required>
+            {% if form.birthday_date.errors %}
+                <div class="error-message">{{ form.birthday_date.errors.0 }}</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Message Section -->
+    <div class="form-section">
+        <div class="section-title">
+            <span>💌</span>
+            <span>Your Personal Message</span>
+        </div>
+
+        <div class="form-group">
+            <label for="message" class="required-field">Birthday Wish</label>
+            <textarea id="message" 
+                      name="message"
+                      placeholder="Write your heartfelt birthday wish... Be creative and personal!"
+                      required>{{ form.message.value|default:'' }}</textarea>
+            <div class="char-count">
+                <span id="charCount">0</span> / 500 characters
+            </div>
+            {% if form.message.errors %}
+                <div class="error-message">{{ form.message.errors.0 }}</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Image Upload Section -->
+    <div class="form-section">
+        <div class="section-title">
+            <span>🖼️</span>
+            <span>Add Photos (Optional)</span>
+        </div>
+
+        <p style="color: #666; margin-bottom: 1rem; font-size: 0.95rem;">
+            You can upload up to 2 photos. Supported formats: JPG, PNG, GIF (Max 5MB each)
+        </p>
+
+        <div class="form-group">
+            <div class="file-input-wrapper">
+                <label class="file-input-label" for="image1">
+                    📤 Click to upload or drag image here
+                </label>
+                <input type="file" 
+                       id="image1" 
+                       name="image"
+                       accept="image/*"
+                       onchange="previewFile(this)">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="file-input-wrapper">
+                <label class="file-input-label" for="image2">
+                    📤 Click to upload second image (optional)
+                </label>
+                <input type="file" 
+                       id="image2" 
+                       name="image2"
+                       accept="image/*"
+                       onchange="previewFile(this)">
+            </div>
+        </div>
+
+        <div class="file-preview" id="filePreview"></div>
+        {% if form.image.errors %}
+            <div class="error-message">{{ form.image.errors.0 }}</div>
+        {% endif %}
+    </div>
+
+    <!-- Theme Selection Section -->
+    <div class="form-section">
+        <div class="section-title">
+            <span>🎨</span>
+            <span class="required-field">Select Card Theme</span>
+        </div>
+
+        <p style="color: #666; margin-bottom: 1.5rem; font-size: 0.95rem;">
+            Choose a theme that best matches your greeting. The theme will style the birthday card design.
+        </p>
+
+        <div class="theme-grid">
+            <div class="theme-card theme-dark">
+                <input type="radio" 
+                       id="theme-dark" 
+                       name="theme" 
+                       value="dark" 
+                       required>
+                <label for="theme-dark" class="theme-label">
+                    <span class="theme-icon">🌙</span>
+                    <span class="theme-name">Dark</span>
+                </label>
+            </div>
+
+            <div class="theme-card theme-bright">
+                <input type="radio" 
+                       id="theme-bright" 
+                       name="theme" 
+                       value="bright">
+                <label for="theme-bright" class="theme-label">
+                    <span class="theme-icon">☀️</span>
+                    <span class="theme-name">Bright</span>
+                </label>
+            </div>
+
+            <div class="theme-card theme-friendly">
+                <input type="radio" 
+                       id="theme-friendly" 
+                       name="theme" 
+                       value="friendly">
+                <label for="theme-friendly" class="theme-label">
+                    <span class="theme-icon">😊</span>
+                    <span class="theme-name">Friendly</span>
+                </label>
+            </div>
+
+            <div class="theme-card theme-lovely">
+                <input type="radio" 
+                       id="theme-lovely" 
+                       name="theme" 
+                       value="lovely">
+                <label for="theme-lovely" class="theme-label">
+                    <span class="theme-icon">💕</span>
+                    <span class="theme-name">Lovely</span>
+                </label>
+            </div>
+
+            <div class="theme-card theme-romantic">
+                <input type="radio" 
+                       id="theme-romantic" 
+                       name="theme" 
+                       value="romantic">
+                <label for="theme-romantic" class="theme-label">
+                    <span class="theme-icon">💑</span>
+                    <span class="theme-name">Romantic</span>
+                </label>
+            </div>
+
+            <div class="theme-card theme-casual">
+                <input type="radio" 
+                       id="theme-casual" 
+                       name="theme" 
+                       value="casual">
+                <label for="theme-casual" class="theme-label">
+                    <span class="theme-icon">🤙</span>
+                    <span class="theme-name">Casual</span>
+                </label>
+            </div>
+
+            <div class="theme-card theme-proposing">
+                <input type="radio" 
+                       id="theme-proposing" 
+                       name="theme" 
+                       value="proposing">
+                <label for="theme-proposing" class="theme-label">
+                    <span class="theme-icon">💍</span>
+                    <span class="theme-name">Proposing</span>
+                </label>
+            </div>
+
+            <div class="theme-card theme-partner">
+                <input type="radio" 
+                       id="theme-partner" 
+                       name="theme" 
+                       value="partner">
+                <label for="theme-partner" class="theme-label">
+                    <span class="theme-icon">👫</span>
+                    <span class="theme-name">Partner</span>
+                </label>
+            </div>
+        </div>
+
+        {% if form.theme.errors %}
+            <div class="error-message" style="margin-top: 1rem;">Please select a theme</div>
+        {% endif %}
+    </div>
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+        <button type="submit" class="btn-submit">
+            ✨ Create Greeting
+        </button>
+        <button type="reset" class="btn-reset">
+            🔄 Clear Form
+        </button>
+    </div>
+</form>
+</div> {% endblock %}
+{% block extra_js %}
+
+<script> Character count for message const messageTextarea = document.getElementById('message'); const charCount = document.getElementById('charCount'); if (messageTextarea.value.length > 0) { charCount.textContent = messageTextarea.value.length; } messageTextarea.addEventListener('input', function() { charCount.textContent = this.value.length; if (this.value.length > 500) { this.value = this.value.substring(0, 500); charCount.textContent = '500'; } }); 
+ File preview and management let fileInputs = { 'image1': null, 'image2': null }; function previewFile(input) { const inputId = input.id; const file = input.files; const preview = document.getElementById('filePreview'); if (file) { 
+
+
+ Validate file size (5MB max) const maxSize = 5 * 1024 * 1024; if (file.size > maxSize) { alert('File size must be less than 5MB'); input.value = ''; fileInputs[inputId] = null; updatePreview(); return; } 
+
+
+ Validate file type if (!file.type.startsWith('image/')) { alert('Please select a valid image file'); input.value = ''; fileInputs[inputId] = null; updatePreview(); return; } const reader = new FileReader(); reader.onload = function(e) { if (!fileInputs[inputId]) { fileInputs[inputId] = { name: file.name, data: e.target.result }; } else { fileInputs[inputId].data = e.target.result; } updatePreview(); }; reader.readAsDataURL(file); } } function updatePreview() { const preview = document.getElementById('filePreview'); preview.innerHTML = ''; Object.keys(fileInputs).forEach((key, index) => { if (fileInputs[key]) { const item = document.createElement('div'); item.className = 'file-preview-item'; item.innerHTML = ` <img src="${fileInputs[key].data}" alt="Preview"> <button type="button" class="remove-btn" onclick="removeFile('${key}')">×</button> `; preview.appendChild(item); } }); } function removeFile(inputId) { fileInputs[inputId] = null; document.getElementById(inputId).value = ''; updatePreview(); } 
+
+
+ Drag and drop functionality document.querySelectorAll('.file-input-wrapper').forEach(wrapper => { const input = wrapper.querySelector('input[type="file"]'); const label = wrapper.querySelector('.file-input-label'); ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => { wrapper.addEventListener(eventName, preventDefaults, false); }); function preventDefaults(e) { e.preventDefault(); e.stopPropagation(); } ['dragenter', 'dragover'].forEach(eventName => { wrapper.addEventListener(eventName, highlight, false); }); ['dragleave', 'drop'].forEach(eventName => { wrapper.addEventListener(eventName, unhighlight, false); }); function highlight() { wrapper.style.backgroundColor = 'rgba(102, 126, 234, 0.1)'; label.style.borderColor = '#764ba2'; } function unhighlight() { wrapper.style.backgroundColor = 'transparent'; label.style.borderColor = '#667eea'; } wrapper.addEventListener('drop', handleDrop, false); function handleDrop(e) { const dt = e.dataTransfer; const files = dt.files; input.files = files; const changeEvent = new Event('change', { bubbles: true }); input.dispatchEvent(changeEvent); } }); 
+
+
+ Form validation document.getElementById('greetingForm').addEventListener('submit', function(e) { const recipientName = document.getElementById('recipient_name').value.trim(); const message = document.getElementById('message').value.trim(); const theme = document.querySelector('input[name="theme"]:checked'); if (!recipientName) { e.preventDefault(); alert('Please enter the recipient\'s name'); document.getElementById('recipient_name').focus(); return; } if (message.length < 10) { e.preventDefault(); alert('Please enter a message with at least 10 characters'); document.getElementById('message').focus(); return; } if (!theme) { e.preventDefault(); alert('Please select a card theme'); return; } }); 
+
+
+ Set default theme on page load window.addEventListener('load', function() { const lovelyTheme = document.getElementById('theme-lovely'); if (lovelyTheme) { lovelyTheme.checked = true; } }); </script>
+{% endblock %}

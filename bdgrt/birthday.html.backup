@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthdayyyyy {{ greeting.recipient_name }}! 🎂</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .birthday-container {
+            text-align: center;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            animation: fadeInScale 1s ease-out;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .birthday-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 30px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .birthday-card::before {
+            content: '🎉';
+            position: absolute;
+            font-size: 15rem;
+            opacity: 0.05;
+            top: -50px;
+            right: -50px;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .recipient-name {
+            font-size: 4rem;
+            color: #667eea;
+            margin: 1.5rem 0;
+            font-weight: bold;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .birthday-image {
+            margin: 2rem 0;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .birthday-image img {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .birthday-message {
+            font-size: 1.3rem;
+            color: #555;
+            line-height: 1.8;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            animation: slideUp 1s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .birthday-date {
+            font-size: 1.2rem;
+            color: #764ba2;
+            margin-top: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* Balloons Animation */
+        .balloon {
+            position: fixed;
+            bottom: -150px;
+            width: 50px;
+            height: 70px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .balloon:nth-child(1) {
+            left: 10%;
+            background: #ff6b6b;
+            animation-delay: 0s;
+        }
+
+        .balloon:nth-child(2) {
+            left: 25%;
+            background: #4ecdc4;
+            animation-delay: 1s;
+        }
+
+        .balloon:nth-child(3) {
+            left: 40%;
+            background: #ffe66d;
+            animation-delay: 2s;
+        }
+
+        .balloon:nth-child(4) {
+            left: 55%;
+            background: #a8e6cf;
+            animation-delay: 3s;
+        }
+
+        .balloon:nth-child(5) {
+            left: 70%;
+            background: #ff8b94;
+            animation-delay: 4s;
+        }
+
+        .balloon:nth-child(6) {
+            left: 85%;
+            background: #c7ceea;
+            animation-delay: 5s;
+        }
+
+        @keyframes float {
+            0% {
+                bottom: -150px;
+                transform: translateX(0) rotate(0deg);
+            }
+            50% {
+                transform: translateX(20px) rotate(10deg);
+            }
+            100% {
+                bottom: 120vh;
+                transform: translateX(-20px) rotate(-10deg);
+            }
+        }
+
+        /* Confetti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #f0f;
+            top: -10px;
+            animation: confettiFall 3s linear infinite;
+        }
+
+        @keyframes confettiFall {
+            to {
+                transform: translateY(120vh) rotate(360deg);
+            }
+        }
+
+        .confetti:nth-child(odd) { background: #0ff; }
+        .confetti:nth-child(3n) { background: #ff0; }
+        .confetti:nth-child(4n) { background: #f0f; }
+        .confetti:nth-child(5n) { background: #0f0; }
+
+        .created-by {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid #e0e0e0;
+            color: #999;
+            font-size: 0.95rem;
+        }
+
+        .music-note {
+            position: fixed;
+            font-size: 2rem;
+            animation: musicFloat 4s ease-in-out infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes musicFloat {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-30px) rotate(15deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .recipient-name {
+                font-size: 2.5rem;
+            }
+
+            .birthday-card {
+                padding: 2rem;
+            }
+
+            .birthday-message {
+                font-size: 1.1rem;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Balloons -->
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+
+    <!-- Music Notes -->
+    <div class="music-note" style="top: 10%; left: 5%;">🎵</div>
+    <div class="music-note" style="top: 20%; right: 10%; animation-delay: 1s;">🎶</div>
+    <div class="music-note" style="top: 60%; left: 8%; animation-delay: 2s;">🎵</div>
+    <div class="music-note" style="top: 70%; right: 15%; animation-delay: 3s;">🎶</div>
+
+    <div class="birthday-container">
+        <div class="birthday-card">
+            <h1>🎂 Happy Birthday!!!!🎉</h1>
+            
+            <div class="recipient-name">{{ greeting.recipient_name }}</div>
+
+            {% if greeting.image %}
+            <div class="birthday-image">
+                <img src="{{ greeting.image.url }}" alt="Birthday Image">
+            </div>
+            {% endif %}
+
+            <div class="birthday-message">
+                {{ greeting.message|linebreaks }}
+            </div>
+
+            <div class="birthday-date">
+                🎈 {{ greeting.birthday_date|date:"F d, Y" }} 🎈
+            </div>
+
+            <div class="created-by">
+                <p>Created with ❤️ using Birthday Greetings App</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create confetti
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confett i.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                document.body.appendChild(confetti);
+            }
+        }
+
+        // Play birthday song (optional - requires user interaction)
+        window.addEventListener('load', function() {
+            createConfetti();
+            
+            // Optional: Add sound effect on click
+            document.addEventListener('click', function() {
+                // You can add a birthday sound effect here
+            }, { once: true });
+        });
+    </script>
+</body>
+</html> 
