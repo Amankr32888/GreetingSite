@@ -19,7 +19,9 @@ SECRET_KEY = 'your-secret-key-change-in-production-hbwicbwbcbwcv'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['*']
+# api/settings.py
+ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
 
 INSTALLED_APPS = [
     
@@ -62,6 +64,8 @@ TEMPLATES = [
 
 
 WSGI_APPLICATION = 'birthday.wsgi.application'
+# api/settings.py
+# WSGI_APPLICATION = 'api.wsgi.app'
 
 DATABASES = {
     'default': {
@@ -102,6 +106,16 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+##
+# For development : 
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # Project-level static
+    BASE_DIR / "greetings" / "static",  # App-level static
+]
+
+# For production: 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+##
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
